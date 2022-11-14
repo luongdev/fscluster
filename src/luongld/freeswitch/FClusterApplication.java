@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
@@ -23,6 +24,9 @@ public class FClusterApplication implements CommandLineRunner {
 
     @Autowired
     Bus bus;
+
+    @Autowired
+    CacheManager cacheManager;
 
     @Override
     public void run(String... args) throws Exception {
@@ -50,7 +54,12 @@ public class FClusterApplication implements CommandLineRunner {
 //                "127.0.0.3/32", null
 //        )));
 
-        System.out.println(bus.execute(new GenerateAccessControlXmlCommand()));
+        var xml = bus.execute(new GenerateAccessControlXmlCommand());
+        var cache = cacheManager.getCache("configurations");
+        assert cache != null;
+        cache.put("fs:acl", xml);
+
+        System.out.println(cache.get("fs:acl", String.class));
 //
 //        bus.execute(new ToggleAccessControlCommand(
 //                accessControlId
