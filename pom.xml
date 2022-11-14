@@ -74,6 +74,16 @@
             <version>2.0.0.Final</version>
         </dependency>
 
+        <dependency>
+            <groupId>luongld</groupId>
+            <artifactId>cqrs</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>luongld</groupId>
+            <artifactId>spring-cqrs</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
 
     <build>
