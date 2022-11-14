@@ -1,23 +1,12 @@
 package luongld.freeswitch;
 
 import luongld.cqrs.Bus;
-import luongld.freeswitch.xml.sections.ConfigurationSection;
-import luongld.freeswitch.xml.Document;
-import luongld.freeswitch.xml.sections.configuration.accesscontrol.AccessControlConfiguration;
-import luongld.freeswitch.xml.sections.configuration.accesscontrol.NetworkContainer;
-import luongld.freeswitch.xml.sections.configuration.accesscontrol.NetworkList;
-import luongld.freeswitch.xml.sections.configuration.accesscontrol.NetworkNode;
+import luongld.freeswitch.configurations.accesscontrol.commands.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import java.util.ArrayList;
-import java.util.HashSet;
 
 @SpringBootApplication
 public class FClusterApplication implements CommandLineRunner {
@@ -38,40 +27,35 @@ public class FClusterApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        var networkContainer = new NetworkContainer(new ArrayList<>() {
+        var accessControlId = bus.execute(new CreateAccessControlCommand("test", "ABC")).getId();
 
-            {
-                add(new NetworkList("event_socket", false, new ArrayList<>() {
-                    {
-                        add(new NetworkNode("127.0.0.1/32", null, true));
-                        add(new NetworkNode("10.196.24.42/32", null, true));
-                        add(new NetworkNode("172.16.86.0/24", null, true));
-                    }
-                }));
-                add(new NetworkList("domains", false, new ArrayList<>() {
-                    {
-                        add(new NetworkNode(null, "voice.metechvn.com", true));
-                    }
-                }));
-            }
 
-        });
+        System.out.println(bus.execute(new AllowAccessControlCommand(
+                accessControlId,
+                "127.0.0.1/32", null
+        )));
 
-        var sections = new HashSet<ConfigurationSection>();
-        sections.add(new ConfigurationSection(new AccessControlConfiguration(networkContainer)));
+        System.out.println(bus.execute(new DenyAccessControlCommand(
+                accessControlId,
+                "127.0.0.5/32", null
+        )));
 
-        var document = new Document(sections);
+        System.out.println(bus.execute(new DenyAccessControlCommand(
+                accessControlId,
+                "127.0.0.2/32", null
+        )));
 
-        try {
-            var jaxbContext = JAXBContext.newInstance(Document.class);
-            var jaxbMarshaller = jaxbContext.createMarshaller();
+        System.out.println(bus.execute(new DenyAccessControlCommand(
+                accessControlId,
+                "127.0.0.3/32", null
+        )));
 
-            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        System.out.println(bus.execute(new GenerateAccessControlXmlCommand(null)));
 
-            jaxbMarshaller.marshal(document, System.out);
+        bus.execute(new ToggleAccessControlCommand(
+                accessControlId
+        ));
 
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
+        System.out.println(bus.execute(new GenerateAccessControlXmlCommand(null)));
     }
 }

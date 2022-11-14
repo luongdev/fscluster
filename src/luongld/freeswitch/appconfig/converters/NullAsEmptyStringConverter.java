@@ -14,6 +14,6 @@ public class NullAsEmptyStringConverter implements AttributeConverter<String, St
 
     @Override
     public String convertToEntityAttribute(String dbData) {
-        return StringUtils.isNotEmpty(dbData) ? dbData : "";
+        return StringUtils.isNotEmpty(dbData) ? dbData : null;
     }
 }

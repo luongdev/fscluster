@@ -10,5 +10,4 @@ public interface AccessControlRepository extends JpaRepository<AccessControl, UU
 
     @Query("select ac from AccessControl ac left join fetch AccessControlDetail acd on ac.id = acd.accessControl.id where ac.id = ?1")
     AccessControl findIncludeDetails(UUID uuid);
-
 }

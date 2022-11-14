@@ -15,10 +15,10 @@ public class AccessControlDetail {
     @Id
     private UUID id;
 
-    @Column(name = "cidr", length = 20, nullable = false)
+    @Column(name = "cidr", length = 20)
     private String cidr;
 
-    @Column(name = "domain", nullable = false)
+    @Column(name = "domain")
     private String domain;
 
     @Column(name = "is_allow", nullable = false)
