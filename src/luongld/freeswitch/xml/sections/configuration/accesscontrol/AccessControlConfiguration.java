@@ -14,6 +14,17 @@ public class AccessControlConfiguration extends ConfigurationSection.Configurati
     @XmlElementRef(name = "network-lists")
     private NetworkContainer networkContainer;
 
+    public static String EMPTY_CONFIGURATION = """
+            <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+            <document type="freeswitch/xml">
+                <section name="configuration">
+                    <configuration name="acl.conf" description="Network Lists">
+                        <network-lists />
+                    </configuration>
+                </section>
+            </document>
+            """;
+
     public AccessControlConfiguration() {
         super("acl.conf", "Access controls");
     }

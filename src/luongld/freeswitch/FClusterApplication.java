@@ -27,35 +27,35 @@ public class FClusterApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        var accessControlId = bus.execute(new CreateAccessControlCommand("test", "ABC")).getId();
+//        var accessControlId = bus.execute(new CreateAccessControlCommand("test", "ABC")).getId();
+//
+//
+//        System.out.println(bus.execute(new AllowAccessControlCommand(
+//                accessControlId,
+//                "127.0.0.1/32", null
+//        )));
+//
+//        System.out.println(bus.execute(new DenyAccessControlCommand(
+//                accessControlId,
+//                "127.0.0.5/32", null
+//        )));
+//
+//        System.out.println(bus.execute(new DenyAccessControlCommand(
+//                accessControlId,
+//                "127.0.0.2/32", null
+//        )));
+//
+//        System.out.println(bus.execute(new DenyAccessControlCommand(
+//                accessControlId,
+//                "127.0.0.3/32", null
+//        )));
 
+        System.out.println(bus.execute(new GenerateAccessControlXmlCommand()));
+//
+//        bus.execute(new ToggleAccessControlCommand(
+//                accessControlId
+//        ));
 
-        System.out.println(bus.execute(new AllowAccessControlCommand(
-                accessControlId,
-                "127.0.0.1/32", null
-        )));
-
-        System.out.println(bus.execute(new DenyAccessControlCommand(
-                accessControlId,
-                "127.0.0.5/32", null
-        )));
-
-        System.out.println(bus.execute(new DenyAccessControlCommand(
-                accessControlId,
-                "127.0.0.2/32", null
-        )));
-
-        System.out.println(bus.execute(new DenyAccessControlCommand(
-                accessControlId,
-                "127.0.0.3/32", null
-        )));
-
-        System.out.println(bus.execute(new GenerateAccessControlXmlCommand(null)));
-
-        bus.execute(new ToggleAccessControlCommand(
-                accessControlId
-        ));
-
-        System.out.println(bus.execute(new GenerateAccessControlXmlCommand(null)));
+//        System.out.println(bus.execute(new GenerateAccessControlXmlCommand(null)));
     }
 }
