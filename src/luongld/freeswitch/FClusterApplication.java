@@ -1,7 +1,9 @@
 package luongld.freeswitch;
 
 import luongld.cqrs.Bus;
-import luongld.freeswitch.configurations.accesscontrol.commands.*;
+import luongld.freeswitch.esl.InboundClient;
+import luongld.freeswitch.esl.cli.CliExecutor;
+import luongld.freeswitch.esl.cli.Lua;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -27,6 +29,12 @@ public class FClusterApplication implements CommandLineRunner {
 
     @Autowired
     CacheManager cacheManager;
+
+    @Autowired
+    CliExecutor cliExecutor;
+
+    @Autowired
+    InboundClient inboundClient;
 
     @Override
     public void run(String... args) throws Exception {
@@ -54,17 +62,21 @@ public class FClusterApplication implements CommandLineRunner {
 //                "127.0.0.3/32", null
 //        )));
 
-        var xml = bus.execute(new GenerateAccessControlXmlCommand());
-        var cache = cacheManager.getCache("configurations");
-        assert cache != null;
-        cache.put("fs:acl", xml);
-
-        System.out.println(cache.get("fs:acl", String.class));
+//        var xml = bus.execute(new GenerateAccessControlXmlCommand());
+//        var cache = cacheManager.getCache("configurations");
+//        assert cache != null;
+//        cache.put("fs:acl", xml);
+//
+//        System.out.println(cache.get("fs:acl", String.class));
 //
 //        bus.execute(new ToggleAccessControlCommand(
 //                accessControlId
 //        ));
 
 //        System.out.println(bus.execute(new GenerateAccessControlXmlCommand(null)));
+
+//        var cli = new Lua("domain_agent_list", "d9bfc122-66dc-4ef8-b730-270baf75f8a5");
+//
+//        System.out.println(cliExecutor.submit(cli).get(0).getBodyLines());
     }
 }

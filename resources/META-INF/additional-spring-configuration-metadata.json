@@ -1,0 +1,19 @@
+{
+  "properties": [
+    {
+      "name": "app.pbx.default-password",
+      "type": "java.lang.String",
+      "description": "Password default when connect to inbound clients."
+    },
+    {
+      "name": "app.pbx.default-timeout-sec",
+      "type": "java.lang.Integer",
+      "description": "Description for app.pbx.default-timeout-sec."
+    }},
+    {
+      "name": "app.pbx.read-timeout-sec",
+      "type": "java.lang.Integer",
+      "description": "Description for app.pbx.default-timeout-sec."
+    }
+  ]
+}
