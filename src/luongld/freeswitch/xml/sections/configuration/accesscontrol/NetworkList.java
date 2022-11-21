@@ -41,6 +41,12 @@ public class NetworkList {
         this.nodes.addAll(new HashSet<>(nodes));
     }
 
+    public NetworkList node(String cidr, String domainName, boolean allow) {
+        this.nodes.add(new NetworkNode(cidr, domainName, allow));
+
+        return this;
+    }
+
     public String getName() {
         return name;
     }

@@ -43,6 +43,9 @@ public class GenerateAccessControlXmlHandler implements RequestHandler<String, G
         var networks = new ArrayList<NetworkList>();
 
         var accessControls = accessControlRepository.findAll();
+
+        var eventSocketControl = accessControls.stream().anyMatch(a -> "event_socket".equalsIgnoreCase(a.getName()));
+
         for (var accessControl : accessControls) {
             var network = networkFrom(accessControl);
             if (network == null) continue;
@@ -50,6 +53,9 @@ public class GenerateAccessControlXmlHandler implements RequestHandler<String, G
             networks.add(network);
         }
 
+        if (!eventSocketControl) {
+            networks.add(new NetworkList("event_socket", false).node("127.0.0.1/32", null, true));
+        }
 
         return marshal(networks);
     }
