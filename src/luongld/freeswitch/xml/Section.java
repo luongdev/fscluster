@@ -1,13 +1,15 @@
 package luongld.freeswitch.xml;
 
 import luongld.freeswitch.xml.sections.ConfigurationSection;
+import luongld.freeswitch.xml.sections.DirectorySection;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlSeeAlso({
-        ConfigurationSection.class
+        ConfigurationSection.class,
+        DirectorySection.class,
 })
 public abstract class Section {
 
