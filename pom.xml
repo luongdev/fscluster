@@ -78,6 +78,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.passay</groupId>
+            <artifactId>passay</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
+        <dependency>
             <groupId>luongld</groupId>
             <artifactId>cqrs</artifactId>
             <version>0.0.1</version>

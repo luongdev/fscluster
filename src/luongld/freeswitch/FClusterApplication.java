@@ -1,6 +1,8 @@
 package luongld.freeswitch;
 
 import luongld.cqrs.Bus;
+import luongld.freeswitch.configurations.directory.commands.CreateExtensionCommand;
+import luongld.freeswitch.domain.commands.CreateDomainCommand;
 import luongld.freeswitch.esl.InboundClient;
 import luongld.freeswitch.esl.cli.CliExecutor;
 import luongld.freeswitch.esl.cli.Lua;
@@ -78,5 +80,8 @@ public class FClusterApplication implements CommandLineRunner {
 //        var cli = new Lua("domain_agent_list", "d9bfc122-66dc-4ef8-b730-270baf75f8a5");
 //
 //        System.out.println(cliExecutor.submit(cli).get(0).getBodyLines());
+
+        bus.execute(new CreateDomainCommand("default"));
+        bus.execute(new CreateExtensionCommand("1000", "default", null));
     }
 }
